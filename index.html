@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="How Jailbreak Attacks Inform Safety Alignment: A Defender-Centric, Shapley-Based Evaluation of Jailbreak Contributions.">
+  <meta property="og:title" content="How Jailbreak Attacks Inform Safety Alignment">
+  <meta property="og:description" content="How jailbreak attacks inform safety alignment through defender-centric utility, AttackSHAP attribution, and compact subset selection.">
+  <meta property="og:image" content="static/images/amess-workflow.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:title" content="AttackSHAP / A-MESS">
+  <meta name="twitter:description" content="A defender-centric, Shapley-based evaluation of jailbreak contributions.">
+  <meta name="twitter:image" content="static/images/amess-workflow.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="keywords" content="LLM safety, jailbreak attacks, Shapley value, AttackSHAP, A-MESS, red teaming">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>How Jailbreak Attacks Inform Safety Alignment</title>
+  <link rel="icon" type="image/x-icon" href="static/images/lab_logo.jpg">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css?v=patent-k4">
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/selection-playground-data.js"></script>
+  <script defer src="static/js/index.js?v=patent-k4"></script>
+</head>
+
+<body>
+  <nav class="navbar is-white is-fixed-top" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="#top" aria-label="AttackSHAP homepage">
+        <img src="static/images/full_lab_logo.png" alt="Lab logo">
+      </a>
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMain">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <div id="navbarMain" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#abstract">Abstract</a>
+        <a class="navbar-item" href="#method">Method</a>
+        <a class="navbar-item" href="#results">Results</a>
+        <a class="navbar-item" href="#playground">Playground</a>
+        <a class="navbar-item" href="#figures">Figures</a>
+        <a class="navbar-item" href="#BibTeX">BibTeX</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="section hero-section">
+      <div class="container is-max-desktop has-text-centered">
+        <p class="eyebrow">2026 Under Submission</p>
+        <h1 class="title is-1 publication-title">
+          How Jailbreak Attacks Inform Safety Alignment: A Defender-Centric, Shapley-Based Evaluation of Jailbreak Contributions
+        </h1>
+
+        <div class="is-size-5 publication-authors">
+          <span class="author-block"><a href="https://frank-thou.github.io/" target="_blank">Yukai Zhou</a><sup>1</sup>,</span>
+          <span class="author-block"><a href="https://github.com/Tilopia123" target="_blank">Feiyang Lu</a><sup>1</sup>,</span>
+          <span class="author-block"><a href="https://github.com/xiaokaimao" target="_blank">Xiaokai Mao</a><sup>2</sup>,</span>
+          <span class="author-block"><a href="https://person.zju.edu.cn/en/jinfeiliu" target="_blank">Jinfei Liu</a><sup>2</sup>,</span>
+          <span class="author-block"><a href="https://wwj95.github.io/" target="_blank">Wenjie Wang</a><sup>1,&dagger;</sup></span>
+        </div>
+        <div class="is-size-5 publication-authors">
+          <span class="author-block"><sup>1</sup>ShanghaiTech University</span>
+          <span class="author-block"><sup>2</sup>Zhejiang University</span>
+        </div>
+        <div class="is-size-6 publication-authors publication-notes">
+          <span class="author-block"><sup>&dagger;</sup>Corresponding author</span>
+        </div>
+
+        <div class="publication-links">
+          <span class="link-block">
+            <!-- <a href="static/attackshap-amess.pdf" target="_blank" class="external-link button is-normal is-dark"> -->
+            <a href="#" target="_blank" class="external-link button is-normal is-dark">
+              <span class="icon"><i class="fas fa-file-pdf"></i></span>
+              <span>Paper</span>
+            </a>
+          </span>
+          <span class="link-block">
+            <a href="#" target="_blank" class="external-link button is-normal is-dark placeholder-link">
+              <span class="icon"><i class="fab fa-github"></i></span>
+              <span>Code</span>
+            </a>
+          </span>
+          <span class="link-block">
+            <a href="#" target="_blank" class="external-link button is-normal is-dark placeholder-link">
+              <span class="icon"><i class="ai ai-arxiv"></i></span>
+              <span>arXiv</span>
+            </a>
+          </span>
+        </div>
+
+      </div>
+
+      <div class="container is-max-widescreen workflow-wrap">
+        <figure class="paper-figure hero-figure">
+          <img src="static/images/amess-workflow.png" alt="A-MESS defender-centric workflow overview">
+        </figure>
+      </div>
+    </section>
+
+    <section class="section hero is-light" id="abstract">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                Jailbreak attacks on large language models are usually evaluated by attacker-centric metrics such as attack success rate (ASR), yet an attack that breaks a model is not necessarily useful for improving its safety. We propose a defender-centric view of jailbreak evaluation, where attacks are evaluated by the downstream safety improvements they enable when used as red-teaming data for safety training. Building on this view, we introduce <strong>A-MESS</strong> (<strong>Minimal Effective Attack-Subset Selection</strong>), a setting-agnostic framework for attributing and selecting jailbreak attacks from black-box subset utility observations. A-MESS estimates <strong>AttackSHAP</strong>, a Shapley-based score that attributes marginal utility to individual attacks and selects compact attack subsets under user-specified budgets via greedy or surrogate-based optimization. Across controlled utility landscapes and real LLM safety settings, we find that ASR rankings are weakly aligned with defender-centric utility, that AttackSHAP can be estimated accurately with limited utility queries, and that directly optimizing subsets yields stronger safety utility than attacker-centric or attribution-only selection. These results suggest evaluating jailbreak attacks as resources for improving safety, not only as tools for breaking models.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="method">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">Method</h2>
+        <div class="method-grid">
+          <article class="method-step">
+            <p class="step-index">01</p>
+            <h3 class="title is-5">Defender-Centric Utility</h3>
+            <p>
+              A safety setting defines a black-box utility function \(v_\theta(S)\) over attack subsets. The value of a subset is measured after it is used inside a defense workflow and evaluated on held-out jailbreak and over-refusal tests.
+            </p>
+          </article>
+          <article class="method-step">
+            <p class="step-index">02</p>
+            <h3 class="title is-5">AttackSHAP Attribution</h3>
+            <p>
+              Attacks are treated as players in a cooperative game. AttackSHAP assigns each attack an average marginal utility contribution across subset contexts, making contribution setting-specific rather than purely attack-centric.
+            </p>
+          </article>
+          <article class="method-step">
+            <p class="step-index">03</p>
+            <h3 class="title is-5">Minimal Effective Subsets</h3>
+            <p>
+              A-MESS solves the budgeted subset-selection problem with two complementary solvers: a direct greedy search over true marginal gains, and a surrogate search over a learned utility landscape \(\hat v_\theta\).
+            </p>
+          </article>
+        </div>
+
+        <div class="formula-panel">
+          <article class="formula-card">
+            <p class="panel-label">AttackSHAP Attribution</p>
+            <p class="formula-large">
+              \[
+                \phi_i^\theta =
+                \mathbb{E}_{\pi}
+                \left[
+                  v_\theta(P_i^\pi \cup \{a_i\}) - v_\theta(P_i^\pi)
+                \right]
+              \]
+            </p>
+          </article>
+          <article class="formula-card">
+            <p class="panel-label">Budgeted Selection</p>
+            <p class="formula-large">
+              \[
+                S_k^\star =
+                \arg\max_{S \subseteq \mathcal{A},\, |S|=k}
+                v_\theta(S)
+              \]
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section hero is-light" id="results">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">Key Results</h2>
+        <div class="result-grid">
+          <article class="result-card">
+            <p class="metric">0.215</p>
+            <h3 class="title is-5">ASR weakly predicts utility</h3>
+            <p>
+              No-defense ASR and singleton ICD utility are weakly correlated in the real setting, with Spearman &rho; = 0.215 and Kendall &tau; = 0.190.
+            </p>
+          </article>
+          <article class="result-card">
+            <p class="metric">0.828</p>
+            <h3 class="title is-5">Surrogate utility learning</h3>
+            <p>
+              On real Qwen2.5-7B adversarial-training utilities, the surrogate reaches R^2 = 0.828 with 150 training subsets.
+            </p>
+          </article>
+          <article class="result-card">
+            <p class="metric">82.69%+</p>
+            <h3 class="title is-5">Recovered oracle gain</h3>
+            <p>
+              On synthetic landscapes, A-MESS-GREEDY recovers at least 82.69% of the oracle improvement gap for nontrivial budgets.
+            </p>
+          </article>
+          <article class="result-card">
+            <p class="metric">0.9397</p>
+            <h3 class="title is-5">Best real subset utility</h3>
+            <p>
+              In the Ministral-3 ICD setting, both A-MESS solvers select {1, 2, 3, 6} for k = 4 and reach utility 0.9397.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="playground">
+      <div class="container is-max-widescreen">
+        <h2 class="title is-3 has-text-centered">Minimal Effective Subset Playground</h2>
+
+        <div class="playground-shell">
+          <div class="playground-toolbar">
+            <div class="dataset-control">
+              <label class="label" for="dataset-index-input">Dataset index</label>
+              <div class="dataset-input-row">
+                <input id="dataset-index-input" class="input" type="number" min="0" max="89" value="0" step="1">
+                <input id="dataset-index-slider" class="slider-input" type="range" min="0" max="89" value="0" step="1">
+              </div>
+            </div>
+
+            <div class="budget-control">
+              <span class="label">Budget</span>
+              <div class="budget-buttons" role="group" aria-label="Subset budget">
+                <button class="budget-button" type="button" data-budget="2">k = 2</button>
+                <button class="budget-button is-active" type="button" data-budget="4">k = 4</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="playground-summary">
+            <div>
+              <span>Landscape</span>
+              <strong id="playground-landscape">Dataset 0</strong>
+            </div>
+            <div>
+              <span>Best practical method</span>
+              <strong id="playground-best-method">A-MESS-Greedy</strong>
+            </div>
+            <div>
+              <span>Oracle utility</span>
+              <strong id="playground-oracle">0.0000</strong>
+            </div>
+          </div>
+
+          <div class="playground-table-wrap">
+            <table class="playground-table">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>Selected subset</th>
+                  <th>Utility</th>
+                  <th>Normalized gain</th>
+                </tr>
+              </thead>
+              <tbody id="playground-rows"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="figures">
+      <div class="container is-max-widescreen">
+        <h2 class="title is-3 has-text-centered">Figures</h2>
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item">
+            <figure class="paper-figure">
+              <img src="static/images/asr-utility-ranking-horizontal.png" alt="Horizontal no-defense ASR ranking compared with singleton ICD utility ranking">
+            </figure>
+            <p class="figure-caption">
+              Horizontal view of how no-defense attack success and defender-side singleton ICD utility rank the same jailbreak attacks differently.
+            </p>
+          </div>
+          <div class="item">
+            <figure class="paper-figure">
+              <img src="static/images/synthetic-evaluation-panels.png" alt="Synthetic evaluation panels for surrogate learning, full-vector AttackSHAP estimation, and top-k overlap">
+            </figure>
+            <p class="figure-caption">
+              Synthetic evaluation of A-MESS-SURROGATE: panel 3a evaluates surrogate utility prediction, panel 3b compares full-vector AttackSHAP estimation, and panel 3c measures top-k overlap with reference AttackSHAP.
+            </p>
+          </div>
+          <div class="item">
+            <figure class="paper-figure">
+              <img src="static/images/subset-selection-table4.svg?v=table4-2" alt="Synthetic subset selection results table">
+            </figure>
+            <p class="figure-caption">
+              Table 4 reports synthetic subset selection results by normalized utility gain across 90 utility landscapes.
+            </p>
+          </div>
+          <div class="item">
+            <figure class="paper-figure">
+              <img src="static/images/real-subset-table-with-header.png?v=table5-2" alt="Real in-context-defense subset selection result table">
+            </figure>
+            <p class="figure-caption">
+              Table 5 reports real ICD subset selection on Ministral-3 for k = 2 and k = 4.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section hero is-light" id="contribution">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">Contributions</h2>
+        <div class="content contribution-list">
+          <p>
+            <strong>Reframing.</strong> Jailbreak attacks are evaluated as resources for improving safety alignment, not only as tools for breaking an undefended model.
+          </p>
+          <p>
+            <strong>Attribution.</strong> AttackSHAP uses Shapley-style marginal contribution to assign setting-specific credit to individual jailbreak attacks.
+          </p>
+          <p>
+            <strong>Selection.</strong> A-MESS turns attribution into a practical subset decision by selecting compact attack sets that maximize downstream defense utility.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="BibTeX">
+      <div class="container is-max-desktop content">
+        <h2 class="title is-3">BibTeX</h2>
+        <pre><code>
+          coming soon
+          <!-- @inproceedings{anonymous2026attackshap,
+  title = {How Jailbreak Attacks Inform Safety Alignment: A Defender-Centric, Shapley-Based Evaluation of Jailbreak Contributions},
+  author = {Author One and Author Two and Author Three},
+  booktitle = {Under submission},
+  year = {2026}
+} -->
+</code></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This page is built upon the
+              <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>,
+              originally adapted from the
+              <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project.
+              A patent application related to this work has been filed.
+              <!-- Paper links, author metadata, code URL, and citation entries are placeholders for the under-submission version. -->
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

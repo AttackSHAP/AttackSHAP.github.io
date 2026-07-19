@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="572" viewBox="0 0 1500 572">
+  <rect width="1500" height="572" fill="#fff"/>
+  <style>
+    .title{font:700 34px Arial, Helvetica, sans-serif; fill:#17202a;}
+    .sub{font:400 22px Arial, Helvetica, sans-serif; fill:#5f6a7a;}
+    .head{font:700 24px Arial, Helvetica, sans-serif; fill:#17202a;}
+    .body{font:400 24px Arial, Helvetica, sans-serif; fill:#17202a;}
+    .bold{font:700 24px Arial, Helvetica, sans-serif; fill:#17202a;}
+    .sec{font:italic 23px Arial, Helvetica, sans-serif; fill:#5f6a7a;}
+    .line{stroke:#d8e2ec; stroke-width:1;}
+    .dark{stroke:#1f2a38; stroke-width:2;}
+  </style>
+  <text class="title" x="54" y="58">Table 4. Synthetic subset selection results</text>
+  <text class="sub" x="54" y="92">Normalized Gain NG<tspan baseline-shift="sub" font-size="15">k</tspan> (%) averaged over 90 utility landscapes.</text>
+  <text class="head" x="62" y="150">Method</text>
+  <text class="head" x="576" y="150" text-anchor="middle">k = 1</text>
+  <text class="head" x="782" y="150" text-anchor="middle">k = 3</text>
+  <text class="head" x="988" y="150" text-anchor="middle">k = 5</text>
+  <text class="head" x="1194" y="150" text-anchor="middle">k = 7</text>
+  <text class="head" x="1392" y="150" text-anchor="middle">k = 9</text>
+  <line class="dark" x1="54" y1="166" x2="1446" y2="166"/>
+  <rect x="54" y="174" width="1392" height="47" fill="#f6f8fb"/>
+  <text class="sec" x="62" y="205">Attribution Baselines</text>
+  <line class="line" x1="54" y1="221" x2="1446" y2="221"/>
+
+  <text class="body" x="62" y="254">TopK-AOO<tspan baseline-shift="sub" font-size="16">v</tspan></text>
+  <text class="bold" x="576" y="254" text-anchor="middle">100.00</text><text class="body" x="782" y="254" text-anchor="middle">53.12</text><text class="body" x="988" y="254" text-anchor="middle">46.66</text><text class="body" x="1194" y="254" text-anchor="middle">37.76</text><text class="body" x="1392" y="254" text-anchor="middle">31.52</text>
+  <line class="line" x1="54" y1="271" x2="1446" y2="271"/>
+  <text class="body" x="62" y="301">TopK-LOO<tspan baseline-shift="sub" font-size="16">v</tspan></text>
+  <text class="body" x="576" y="301" text-anchor="middle">33.99</text><text class="body" x="782" y="301" text-anchor="middle">36.48</text><text class="body" x="988" y="301" text-anchor="middle">44.79</text><text class="body" x="1194" y="301" text-anchor="middle">57.33</text><text class="body" x="1392" y="301" text-anchor="middle">63.80</text>
+  <line class="line" x1="54" y1="318" x2="1446" y2="318"/>
+  <text class="body" x="62" y="348">TopK-φ<tspan baseline-shift="sub" font-size="16">v</tspan></text>
+  <text class="body" x="576" y="348" text-anchor="middle">65.39</text><text class="body" x="782" y="348" text-anchor="middle">61.10</text><text class="body" x="988" y="348" text-anchor="middle">67.03</text><text class="body" x="1194" y="348" text-anchor="middle">68.51</text><text class="body" x="1392" y="348" text-anchor="middle">69.28</text>
+  <line class="line" x1="54" y1="365" x2="1446" y2="365"/>
+  <text class="body" x="62" y="395">TopK-φ̂</text>
+  <text class="body" x="576" y="395" text-anchor="middle">59.66</text><text class="body" x="782" y="395" text-anchor="middle">57.37</text><text class="body" x="988" y="395" text-anchor="middle">62.94</text><text class="body" x="1194" y="395" text-anchor="middle">65.01</text><text class="body" x="1392" y="395" text-anchor="middle">71.07</text>
+  <line class="line" x1="54" y1="412" x2="1446" y2="412"/>
+
+  <rect x="54" y="412" width="1392" height="47" fill="#f6f8fb"/>
+  <text class="sec" x="62" y="443">A-MESS Solvers</text>
+  <line class="line" x1="54" y1="459" x2="1446" y2="459"/>
+  <text class="body" x="62" y="489">A-MESS-Greedy</text>
+  <text class="bold" x="576" y="489" text-anchor="middle">100.00</text><text class="bold" x="782" y="489" text-anchor="middle">85.47</text><text class="bold" x="988" y="489" text-anchor="middle">83.36</text><text class="bold" x="1194" y="489" text-anchor="middle">83.20</text><text class="body" x="1392" y="489" text-anchor="middle">82.69</text>
+  <line class="line" x1="54" y1="506" x2="1446" y2="506"/>
+  <text class="body" x="62" y="536">A-MESS-Surrogate</text>
+  <text class="body" x="576" y="536" text-anchor="middle">59.78</text><text class="body" x="782" y="536" text-anchor="middle">73.18</text><text class="body" x="988" y="536" text-anchor="middle">74.48</text><text class="body" x="1194" y="536" text-anchor="middle">79.79</text><text class="bold" x="1392" y="536" text-anchor="middle">84.52</text>
+  <line class="dark" x1="54" y1="560" x2="1446" y2="560"/>
+</svg>
